@@ -116,7 +116,10 @@ function init() {
     this.nextEl = this.getEl('next');
     this.containerEl = this.getEl('container');
     this.emitUpdate = emitUpdate.bind(this);
-    this.subscribeTo(resizeUtil).on('resize', onRender.bind(this));
+    this.subscribeTo(resizeUtil).on('resize', () => {
+        cleanupAsync.call(this);
+        onRender.call(this);
+    });
     observer.observeRoot(this, ['index']);
     if (autoplayInterval) observer.observeRoot(this, ['paused']);
 
